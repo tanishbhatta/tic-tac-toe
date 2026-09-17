@@ -20,6 +20,7 @@ const updateBoard = (playerBool, position) => {
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block;">
             <style>
                 .circle-box {
+                    filter: drop-shadow(0px 1px 5px lightblue);
                     stroke-dasharray: 176;
                     stroke-dashoffset: 176;
                     animation: Draw 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards;
@@ -34,8 +35,9 @@ const updateBoard = (playerBool, position) => {
             </style>
 
             <circle class="circle-box" cx="50" cy="50" r="28" stroke="var(--playerO)" stroke-width="4" fill="none" stroke-linecap="round" transform="rotate(-90 50 50)"/>
-        </svg>
-        `; //innerHtml for Circle in the game
+        </svg>`;
+         //innerHtml for Circle in the game
+        return false;
     }else{
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block">
@@ -56,15 +58,38 @@ const updateBoard = (playerBool, position) => {
 
             <line class="cross-line" x1="75" y1="25" x2="25" y2="75" stroke="var(--playerX)" stroke-width="3.5"/>
             <line class="cross-line" x1="75" y1="75" x2="25" y2="25" stroke="var(--playerX)" stroke-width="3.5"/>
-        </svg>
-        `;//innerHtml for Cross in the game
+        </svg>`;//innerHtml for Cross in the game
+        return true;
     }
 }
 
+const winConds = (boardMat=board) => {
+    //row wins
+    if (boardMat[0][0] === boardMat[0][1] && boardMat[0][0] === boardMat[0][2]) return true;
+    if (boardMat[1][0] === boardMat[1][1] && boardMat[1][0] === boardMat[1][2]) return true;
+    if (boardMat[2][0] === boardMat[2][1] && boardMat[2][0] === boardMat[2][2]) return true;
+
+    //column wins
+    if (boardMat[0][0] === boardMat[1][0] && boardMat[0][0] === boardMat[2][0]) return true;
+    if (boardMat[0][1] === boardMat[1][1] && boardMat[0][1] === boardMat[2][1]) return true;
+    if (boardMat[0][2] === boardMat[1][2] && boardMat[0][2] === boardMat[2][2]) return true;
+
+    //diagonal wins
+    if (boardMat[0][0] === boardMat[1][1] && boardMat[0][0] === boardMat[2][2]) return true;
+    if (boardMat[0][2] === boardMat[1][1] && boardMat[0][2] === boardMat[2][0]) return true;
+
+    //if no winning condition satisfied
+    return false;
+}
+
+let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
-            updateBoard(false, col);
+            if (col.innerHTML === ``) flag = updateBoard(flag, col);
+            if (winConds){
+                console.log(`Player ${col} won.`)
+            }
         })
     })
 })
