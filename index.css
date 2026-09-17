@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #121214;
+    --board-color: #1A1A1E;
+    --playerX: #00F0FF;
+    --playerO: #FF007A;
+    --box-hover: rgba(0, 240, 255, 0.02);
+}
+
+body {
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    height: 100vh;
+}
+
+.container {
+    background: var(--board-color);
+    height: 500px;
+    width: 500px;
+    box-shadow: 0px 1px 8px 4px rgba(255,255,255,0.1);
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+}
+
+.box {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5px solid rgba(0, 240, 255, 0.2); /*rgba(0, 240, 255, 0.15)*/
+    font-size: 4rem;
+    font-family:monospace;
+}
+
+.box:hover{
+    background: var(--box-hover);
+}
