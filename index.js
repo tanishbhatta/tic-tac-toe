@@ -14,8 +14,21 @@ const board = [
     [box31, box32, box33]
 ]; //created a board array
 
+const winArray = [
+    [board[0][0], board[0][1], board[0][2]],
+    [board[1][0], board[1][1], board[1][2]],
+    [board[2][0], board[2][1], board[2][2]],
+    [board[0][0], board[1][0], board[2][0]],
+    [board[0][1], board[1][1], board[2][1]],
+    [board[0][2], board[1][2], board[2][2]],
+    [board[0][0], board[1][1], board[2][2]],
+    [board[0][2], board[1][1], board[2][0]]
+];
+
+let toWinner;
 const updateBoard = (playerBool, position) => {
     if (playerBool) {
+        toWinner =  'O';
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block;">
             <style>
@@ -39,12 +52,13 @@ const updateBoard = (playerBool, position) => {
          //innerHtml for Circle in the game
         return false;
     }else{
+        toWinner =  'X';
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block">
             <style>
                 .cross-line{
                     filter: drop-shadow(0px 1px 5px red);
-                    stroke-dashArray:71;
+                    stroke-dasharray:71;
                     stroke-dashoffset:71;
                     animation: DrawLine 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards; 
                 }
@@ -63,33 +77,21 @@ const updateBoard = (playerBool, position) => {
     }
 }
 
-const winConds = () => {
-    //row wins
-    if (board[0][0] === board[0][1] && board[0][0] === board[0][2]) return true;
-    if (board[1][0] === board[1][1] && board[1][0] === board[1][2]) return true;
-    if (board[2][0] === board[2][1] && board[2][0] === board[2][2]) return true;
-
-    //column wins
-    if (board[0][0] === board[1][0] && board[0][0] === board[2][0]) return true;
-    if (board[0][1] === board[1][1] && board[0][1] === board[2][1]) return true;
-    if (board[0][2] === board[1][2] && board[0][2] === board[2][2]) return true;
-
-    //diagonal wins
-    if (board[0][0] === board[1][1] && board[0][0] === board[2][2]) return true;
-    if (board[0][2] === board[1][1] && board[0][2] === board[2][0]) return true;
-
-    //if no winning condition satisfied
-    return false;
-}
+const winCond = () => {
+    for (const i of winArray){
+        if (i[0].innerHTML !== '' && i[0].innerHTML === i[1].innerHTML && i[0].innerHTML === i[2].innerHTML) return true;
+    }
+};
 
 let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
             if (col.innerHTML === ``) flag = updateBoard(flag, col);
-            if (winConds){
-                console.log(`Player ${col} won.`)
+            if (winCond() === true){
+                console.log(`Player ${toWinner} won.`)
             }
         })
     })
 })
+
