@@ -1,3 +1,5 @@
+'use strict';
+const fullBoard = document.getElementById('full-board');
 const box11 = document.getElementById('11');
 const box12 = document.getElementById('12');
 const box13 = document.getElementById('13');
@@ -15,20 +17,18 @@ const board = [
 ]; //created a board array
 
 const winArray = [
-    [board[0][0], board[0][1], board[0][2]],
-    [board[1][0], board[1][1], board[1][2]],
-    [board[2][0], board[2][1], board[2][2]],
-    [board[0][0], board[1][0], board[2][0]],
-    [board[0][1], board[1][1], board[2][1]],
-    [board[0][2], board[1][2], board[2][2]],
-    [board[0][0], board[1][1], board[2][2]],
-    [board[0][2], board[1][1], board[2][0]]
+    [[0,0], [0,1], [0,2]],
+    [[1,0], [1,1], [1,2]],
+    [[2,0], [2,1], [2,2]],
+    [[0,0], [1,0], [2,0]],
+    [[0,1], [1,1], [2,1]],
+    [[0,2], [1,2], [2,2]],
+    [[0,0], [1,1], [2,2]],
+    [[0,2], [1,1], [2,0]]
 ];
 
-let toWinner;
-const updateBoard = (playerBool, position) => {
+const updateBoardWithPlayerShape = (playerBool, position) => {
     if (playerBool) {
-        toWinner =  'O';
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block;">
             <style>
@@ -52,7 +52,6 @@ const updateBoard = (playerBool, position) => {
          //innerHtml for Circle in the game
         return false;
     }else{
-        toWinner =  'X';
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block">
             <style>
@@ -79,17 +78,33 @@ const updateBoard = (playerBool, position) => {
 
 const winCond = () => {
     for (const i of winArray){
-        if (i[0].innerHTML !== '' && i[0].innerHTML === i[1].innerHTML && i[0].innerHTML === i[2].innerHTML) return true;
-    }
+        if (board[i[0][0]][i[0][1]].innerHTML !== '' && board[i[0][0]][i[0][1]].innerHTML === board[i[1][0]][i[1][1]].innerHTML && board[i[0][0]][i[0][1]].innerHTML === board[i[2][0]][i[2][1]].innerHTML){
+            return [i, true];
+        }
+    } 
+    return [[], false];
 };
 
-let flag = true;
+const getCoordOfBoxes = (tripleAsked) => {
+    const [start, end] = [tripleAsked[0], tripleAsked[2]];
+    const startCoords = [start[0] * 33.33 + 16.67, start[1] * 33.33 + 16.67];
+    const endCoords = [end[0] * 33.33 + 16.67, end[1] * 33.33 + 16.67];
+    return [startCoords, endCoords];
+};
+
+const updateBoardAfterWin = (tripleAsked) => {
+    const[startCoords, endCoords] = getCoordOfBoxes(tripleAsked);
+};
+
+let forPlayerO = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
-            if (col.innerHTML === ``) flag = updateBoard(flag, col);
-            if (winCond() === true){
-                console.log(`Player ${toWinner} won.`)
+            if (col.innerHTML === ``) forPlayerO = updateBoardWithPlayerShape(forPlayerO, col);
+            const [winTriple, isWin] = winCond();
+            if (isWin){
+                if (forPlayerO) console.log('Player X wins!');
+                else console.log('Player O wins');
             }
         })
     })
