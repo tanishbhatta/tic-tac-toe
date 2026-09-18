@@ -22,6 +22,7 @@ body {
 }
 
 .container {
+    position: relative;
     background: var(--board-color);
     height: 500px;
     width: 500px;
@@ -43,4 +44,60 @@ body {
 
 .box:hover{
     background: var(--box-hover);
+}
+
+/* PlayerO from JS */
+.circle-box {
+    filter: drop-shadow(0px 1px 5px lightblue);
+    stroke-dasharray: 176;
+    stroke-dashoffset: 176;
+    animation: Draw 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards;
+    
+    
+}
+
+@keyframes Draw{
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+/* PlayerX from JS */
+.cross-line{
+    filter: drop-shadow(0px 1px 5px red);
+    stroke-dasharray:71;
+    stroke-dashoffset:71;
+    animation: DrawLine 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards;
+   
+}
+
+@keyframes DrawLine{
+    to {
+    stroke-dashoffset:0;}
+}
+
+/* box all elements to give grow effect */
+#full-board.grow .cross-line{
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: growAndBack 0.7s forwards;
+    
+}
+
+#full-board.grow .circle-box{
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: growAndBack 0.7s forwards;
+}
+
+@keyframes growAndBack{
+    0% {
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.5);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
