@@ -63,20 +63,21 @@ const updateBoard = (playerBool, position) => {
     }
 }
 
-const winConds = (boardMat=board) => {
-    //row wins
-    if (boardMat[0][0] === boardMat[0][1] && boardMat[0][0] === boardMat[0][2]) return true;
-    if (boardMat[1][0] === boardMat[1][1] && boardMat[1][0] === boardMat[1][2]) return true;
-    if (boardMat[2][0] === boardMat[2][1] && boardMat[2][0] === boardMat[2][2]) return true;
+const winConds = (col) => {
+    const notEmpty = true;
+    if (col.innerHTML === ``) notEmpty = false;
+    if (notEmpty && board[0][0] === board[0][1] && board[0][0] === board[0][2]) return true;
+    if (notEmpty && board[1][0] === board[1][1] && board[1][0] === board[1][2]) return true;
+    if (notEmpty && board[2][0] === board[2][1] && board[2][0] === board[2][2]) return true;
 
     //column wins
-    if (boardMat[0][0] === boardMat[1][0] && boardMat[0][0] === boardMat[2][0]) return true;
-    if (boardMat[0][1] === boardMat[1][1] && boardMat[0][1] === boardMat[2][1]) return true;
-    if (boardMat[0][2] === boardMat[1][2] && boardMat[0][2] === boardMat[2][2]) return true;
+    if (notEmpty && board[0][0] === board[1][0] && board[0][0] === board[2][0]) return true;
+    if (notEmpty && board[0][1] === board[1][1] && board[0][1] === board[2][1]) return true;
+    if (notEmpty && board[0][2] === board[1][2] && board[0][2] === board[2][2]) return true;
 
     //diagonal wins
-    if (boardMat[0][0] === boardMat[1][1] && boardMat[0][0] === boardMat[2][2]) return true;
-    if (boardMat[0][2] === boardMat[1][1] && boardMat[0][2] === boardMat[2][0]) return true;
+    if (notEmpty && board[0][0] === board[1][1] && board[0][0] === board[2][2]) return true;
+    if (notEmpty && board[0][2] === board[1][1] && board[0][2] === board[2][0]) return true;
 
     //if no winning condition satisfied
     return false;
@@ -86,7 +87,7 @@ let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
-            if (col.innerHTML === ``) flag = updateBoard(flag, col);
+            if (col.innerHtml === '') flag = updateBoard(flag, col);
             if (winConds){
                 console.log(`Player ${col} won.`)
             }
