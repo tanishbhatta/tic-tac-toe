@@ -69,9 +69,8 @@ const getCoordOfBoxes = (tripleAsked) => {
 };
 
 const updateBoardAfterWin = (tripleAsked, playerBool) => {
-    fullBoard.classList.add('grow');
     const[startCoords, endCoords] = getCoordOfBoxes(tripleAsked);
-    const dashArrayLength = Math.sqrt(((endCoords[[0]] - startCoords[0]) ** 2) + ((endCoords[1] - startCoords[1]) ** 2)); //dash array length using Distance formula
+    const dashArrayLength = Math.sqrt(((endCoords[0] - startCoords[0]) ** 2) + ((endCoords[1] - startCoords[1]) ** 2)); //dash array length using Distance formula
     if (playerBool){
     fullBoard.insertAdjacentHTML('beforeend', `
         <svg viewBox="0 0 100 100" style="position:absolute; pointer-events:none; width:100%; height:100%; display:block;">
@@ -115,7 +114,12 @@ const updateBoardAfterWin = (tripleAsked, playerBool) => {
     }
 };
 
+const tieCond = () => {
+    fullBoard.classList.add('grow-all');
+}
+
 let forPlayerO = true;
+let game;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
@@ -126,7 +130,10 @@ board.forEach(row => {
                 if (forPlayerO) console.log('Player X wins!');
                 else console.log('Player O wins');
             }
+            else fullBoard.classList.add('grow-all');
         })
     })
 })
+
+
 

@@ -77,17 +77,11 @@ body {
 }
 
 /* box all elements to give grow effect */
-#full-board.grow .cross-line{
+#full-board.grow-all .circle-box, #full-board.grow-all .cross-line{
     transform-origin: center;
     transform-box: fill-box;
-    animation: growAndBack 0.7s forwards;
+    animation: growAndBack 2s forwards;
     
-}
-
-#full-board.grow .circle-box{
-    transform-origin: center;
-    transform-box: fill-box;
-    animation: growAndBack 0.7s forwards;
 }
 
 @keyframes growAndBack{
