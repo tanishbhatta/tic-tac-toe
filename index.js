@@ -63,14 +63,13 @@ const updateBoard = (playerBool, position) => {
     }
 }
 
-
-
 let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
-            if (col.innerHtml === ``) flag = updateBoard(flag, col);
-            
+            if (col.innerHTML === ``) flag = updateBoard(flag, col);
         })
     })
 })
+
+
