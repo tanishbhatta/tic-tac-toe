@@ -63,34 +63,14 @@ const updateBoard = (playerBool, position) => {
     }
 }
 
-const winConds = (col) => {
-    const notEmpty = true;
-    if (col.innerHTML === ``) notEmpty = false;
-    if (notEmpty && board[0][0] === board[0][1] && board[0][0] === board[0][2]) return true;
-    if (notEmpty && board[1][0] === board[1][1] && board[1][0] === board[1][2]) return true;
-    if (notEmpty && board[2][0] === board[2][1] && board[2][0] === board[2][2]) return true;
 
-    //column wins
-    if (notEmpty && board[0][0] === board[1][0] && board[0][0] === board[2][0]) return true;
-    if (notEmpty && board[0][1] === board[1][1] && board[0][1] === board[2][1]) return true;
-    if (notEmpty && board[0][2] === board[1][2] && board[0][2] === board[2][2]) return true;
-
-    //diagonal wins
-    if (notEmpty && board[0][0] === board[1][1] && board[0][0] === board[2][2]) return true;
-    if (notEmpty && board[0][2] === board[1][1] && board[0][2] === board[2][0]) return true;
-
-    //if no winning condition satisfied
-    return false;
-}
 
 let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
-            if (col.innerHtml === '') flag = updateBoard(flag, col);
-            if (winConds){
-                console.log(`Player ${col} won.`)
-            }
+            if (col.innerHtml === ``) flag = updateBoard(flag, col);
+            
         })
     })
 })
