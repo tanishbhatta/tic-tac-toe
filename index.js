@@ -87,13 +87,55 @@ const winCond = () => {
 
 const getCoordOfBoxes = (tripleAsked) => {
     const [start, end] = [tripleAsked[0], tripleAsked[2]];
-    const startCoords = [start[0] * 33.33 + 16.67, start[1] * 33.33 + 16.67];
-    const endCoords = [end[0] * 33.33 + 16.67, end[1] * 33.33 + 16.67];
+    const startCoords = [start[1] * 33.33 + 16.67, start[0] * 33.33 + 16.67];
+    const endCoords = [end[1] * 33.33 + 16.67, end[0] * 33.33 + 16.67];
     return [startCoords, endCoords];
 };
 
-const updateBoardAfterWin = (tripleAsked) => {
+const updateBoardAfterWin = (tripleAsked, playerBool) => {
     const[startCoords, endCoords] = getCoordOfBoxes(tripleAsked);
+    const dashArrayLength = Math.sqrt(((endCoords[[0]] - startCoords[0]) ** 2) + ((endCoords[1] - startCoords[1]) ** 2)); //dash array length using Distance formula
+    if (playerBool){
+    fullBoard.insertAdjacentHTML('beforeend', `
+        <svg viewBox="0 0 100 100" style="position:absolute; pointer-events:none; width:100%; height:100%; display:block;">
+            <style>
+                .win-line{
+                    filter: drop-shadow(0px 1px 5px red);
+                    stroke-dasharray:${dashArrayLength};
+                    stroke-dashoffset:${dashArrayLength};
+                    animation: DrawLine 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards;
+                }
+
+                @keyframes DrawLine{
+                    to {
+                    stroke-dashoffset:0;}
+                }
+            </style>
+
+            <line class="win-line" x1="${startCoords[0]}" y1="${startCoords[1]}" x2="${endCoords[[0]]}" y2="${endCoords[1]}" stroke="var(--playerX)" stroke-width="1.5"/>
+        </svg>
+        `)
+    }else
+    {fullBoard.insertAdjacentHTML('beforeend', `
+        <svg viewBox="0 0 100 100" style="position:absolute; pointer-events:none; width:100%; height:100%; display:block;">
+            <style>
+                .win-line{
+                    filter: drop-shadow(0px 1px 5px lightblue);
+                    stroke-dasharray:${dashArrayLength};
+                    stroke-dashoffset:${dashArrayLength};
+                    animation: DrawLine 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards;
+                }
+
+                @keyframes DrawLine{
+                    to {
+                    stroke-dashoffset:0;}
+                }
+            </style>
+
+            <line class="win-line" x1="${startCoords[0]}" y1="${startCoords[1]}" x2="${endCoords[[0]]}" y2="${endCoords[1]}" stroke="var(--playerO)" stroke-width="1.5"/>
+        </svg>
+        `)
+    }
 };
 
 let forPlayerO = true;
@@ -103,6 +145,7 @@ board.forEach(row => {
             if (col.innerHTML === ``) forPlayerO = updateBoardWithPlayerShape(forPlayerO, col);
             const [winTriple, isWin] = winCond();
             if (isWin){
+                updateBoardAfterWin(winTriple, forPlayerO);
                 if (forPlayerO) console.log('Player X wins!');
                 else console.log('Player O wins');
             }
