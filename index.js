@@ -14,8 +14,10 @@ const board = [
     [box31, box32, box33]
 ]; //created a board array
 
+let toWinner;
 const updateBoard = (playerBool, position) => {
     if (playerBool) {
+        toWinner =  'O';
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block;">
             <style>
@@ -39,12 +41,13 @@ const updateBoard = (playerBool, position) => {
          //innerHtml for Circle in the game
         return false;
     }else{
+        toWinner =  'X';
         position.innerHTML = `
         <svg viewBox="0 0 100 100" style="width:100%; height:100%; display:block">
             <style>
                 .cross-line{
                     filter: drop-shadow(0px 1px 5px red);
-                    stroke-dashArray:71;
+                    stroke-dasharray:71;
                     stroke-dashoffset:71;
                     animation: DrawLine 0.6s cubic-bezier(0.4, 0, 0.4, 1) forwards; 
                 }
@@ -64,20 +67,19 @@ const updateBoard = (playerBool, position) => {
 }
 
 const winConds = () => {
-
     //row wins
-    if (box11.innerHTML === box12.innerHTML && box11.innerHTML === box13.innerHTML) return true;
-    if (box21.innerHTML === box22.innerHTML && box21.innerHTML === box23.innerHTML) return true;
-    if (box31.innerHTML === box32.innerHTML && box31.innerHTML === box33.innerHTML) return true;
+    if (box11.innerHTML !== '' && box12.innerHTML !== '' && box13.innerHTML !== '' && box11.innerHTML === box12.innerHTML && box11.innerHTML === box13.innerHTML) return true;
+    if (box21.innerHTML !== '' && box22.innerHTML !== '' && box23.innerHTML !== '' && box21.innerHTML === box22.innerHTML && box21.innerHTML === box23.innerHTML) return true;
+    if (box31.innerHTML !== '' && box32.innerHTML !== '' && box33.innerHTML !== '' && box31.innerHTML === box32.innerHTML && box31.innerHTML === box33.innerHTML) return true;
 
     //column wins
-    if (box11.innerHTML === box21.innerHTML && box11.innerHTML === box31.innerHTML) return true;
-    if (box12.innerHTML === box22.innerHTML && box12.innerHTML === box32.innerHTML) return true;
-    if (box13.innerHTML === box23.innerHTML && box13.innerHTML === box33.innerHTML) return true;
+    if (box11.innerHTML !== '' && box21.innerHTML !== '' && box31.innerHTML !== '' && box11.innerHTML === box21.innerHTML && box11.innerHTML === box31.innerHTML) return true;
+    if (box12.innerHTML !== '' && box22.innerHTML !== '' && box32.innerHTML !== '' && box12.innerHTML === box22.innerHTML && box12.innerHTML === box32.innerHTML) return true;
+    if (box13.innerHTML !== '' && box23.innerHTML !== '' && box33.innerHTML !== '' && box13.innerHTML === box23.innerHTML && box13.innerHTML === box33.innerHTML) return true;
 
     //diagonal wins
-    if (box11.innerHTML === box22.innerHTML && box11.innerHTML === box33.innerHTML) return true;
-    if (box13.innerHTML === box22.innerHTML && box13.innerHTML === box31.innerHTML) return true;
+    if (box11.innerHTML !== '' && box22.innerHTML !== '' && box33.innerHTML !== '' && box11.innerHTML === box22.innerHTML && box11.innerHTML === box33.innerHTML) return true;
+    if (box13.innerHTML !== '' && box22.innerHTML !== '' && box31.innerHTML !== '' && box13.innerHTML === box22.innerHTML && box13.innerHTML === box31.innerHTML) return true;
 
     //if no winning condition satisfied
     return false;
@@ -89,7 +91,7 @@ board.forEach(row => {
         col.addEventListener('click', () => {
             if (col.innerHTML === ``) flag = updateBoard(flag, col);
             if (winConds() === true){
-                alert(`Player ${col} won.`)
+                console.log(`Player ${toWinner} won.`)
             }
         })
     })
