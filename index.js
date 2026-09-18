@@ -14,6 +14,17 @@ const board = [
     [box31, box32, box33]
 ]; //created a board array
 
+const winArray = [
+    [board[0][0], board[0][1], board[0][2]],
+    [board[1][0], board[1][1], board[1][2]],
+    [board[2][0], board[2][1], board[2][2]],
+    [board[0][0], board[1][0], board[2][0]],
+    [board[0][1], board[1][1], board[2][1]],
+    [board[0][2], board[1][2], board[2][2]],
+    [board[0][0], board[1][1], board[2][2]],
+    [board[0][2], board[1][1], board[2][0]]
+];
+
 let toWinner;
 const updateBoard = (playerBool, position) => {
     if (playerBool) {
@@ -66,31 +77,18 @@ const updateBoard = (playerBool, position) => {
     }
 }
 
-const winConds = () => {
-    //row wins
-    if (box11.innerHTML !== '' && box12.innerHTML !== '' && box13.innerHTML !== '' && box11.innerHTML === box12.innerHTML && box11.innerHTML === box13.innerHTML) return true;
-    if (box21.innerHTML !== '' && box22.innerHTML !== '' && box23.innerHTML !== '' && box21.innerHTML === box22.innerHTML && box21.innerHTML === box23.innerHTML) return true;
-    if (box31.innerHTML !== '' && box32.innerHTML !== '' && box33.innerHTML !== '' && box31.innerHTML === box32.innerHTML && box31.innerHTML === box33.innerHTML) return true;
-
-    //column wins
-    if (box11.innerHTML !== '' && box21.innerHTML !== '' && box31.innerHTML !== '' && box11.innerHTML === box21.innerHTML && box11.innerHTML === box31.innerHTML) return true;
-    if (box12.innerHTML !== '' && box22.innerHTML !== '' && box32.innerHTML !== '' && box12.innerHTML === box22.innerHTML && box12.innerHTML === box32.innerHTML) return true;
-    if (box13.innerHTML !== '' && box23.innerHTML !== '' && box33.innerHTML !== '' && box13.innerHTML === box23.innerHTML && box13.innerHTML === box33.innerHTML) return true;
-
-    //diagonal wins
-    if (box11.innerHTML !== '' && box22.innerHTML !== '' && box33.innerHTML !== '' && box11.innerHTML === box22.innerHTML && box11.innerHTML === box33.innerHTML) return true;
-    if (box13.innerHTML !== '' && box22.innerHTML !== '' && box31.innerHTML !== '' && box13.innerHTML === box22.innerHTML && box13.innerHTML === box31.innerHTML) return true;
-
-    //if no winning condition satisfied
-    return false;
-}
+const winCond = () => {
+    for (const i of winArray){
+        if (i[0].innerHTML !== '' && i[0].innerHTML === i[1].innerHTML && i[0].innerHTML === i[2].innerHTML) return true;
+    }
+};
 
 let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
             if (col.innerHTML === ``) flag = updateBoard(flag, col);
-            if (winConds() === true){
+            if (winCond() === true){
                 console.log(`Player ${toWinner} won.`)
             }
         })
