@@ -63,13 +63,35 @@ const updateBoard = (playerBool, position) => {
     }
 }
 
+const winConds = () => {
+
+    //row wins
+    if (box11.innerHTML === box12.innerHTML && box11.innerHTML === box13.innerHTML) return true;
+    if (box21.innerHTML === box22.innerHTML && box21.innerHTML === box23.innerHTML) return true;
+    if (box31.innerHTML === box32.innerHTML && box31.innerHTML === box33.innerHTML) return true;
+
+    //column wins
+    if (box11.innerHTML === box21.innerHTML && box11.innerHTML === box31.innerHTML) return true;
+    if (box12.innerHTML === box22.innerHTML && box12.innerHTML === box32.innerHTML) return true;
+    if (box13.innerHTML === box23.innerHTML && box13.innerHTML === box33.innerHTML) return true;
+
+    //diagonal wins
+    if (box11.innerHTML === box22.innerHTML && box11.innerHTML === box33.innerHTML) return true;
+    if (box13.innerHTML === box22.innerHTML && box13.innerHTML === box31.innerHTML) return true;
+
+    //if no winning condition satisfied
+    return false;
+}
+
 let flag = true;
 board.forEach(row => {
     row.forEach(col => {
         col.addEventListener('click', () => {
             if (col.innerHTML === ``) flag = updateBoard(flag, col);
+            if (winConds() === true){
+                alert(`Player ${col} won.`)
+            }
         })
     })
 })
-
 
