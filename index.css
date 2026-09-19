@@ -77,11 +77,17 @@ body {
 }
 
 /* box all elements to give grow effect */
-#full-board.grow-all .circle-box, #full-board.grow-all .cross-line{
+#full-board.grow svg{
     transform-origin: center;
     transform-box: fill-box;
-    animation: growAndBack 2s forwards;
+    animation: growAndBack 2.5s forwards;
     
+}
+
+.box.winner svg{
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: growAndBack 1.5s forwards;
 }
 
 @keyframes growAndBack{
@@ -89,7 +95,7 @@ body {
         transform: scale(1);
     }
     50%{
-        transform: scale(1.5);
+        transform: scale(1.2);
     }
     100%{
         transform: scale(1);
