@@ -56,13 +56,11 @@ const updateBoardWithPlayerShape = (playerBool, position) => {
 }
 
 //Defining the condition for winning
-const winCond = () => {
+const winCond = (stateArray) => {
     for (const i of winArray){
-        if (board[i[0][0]][i[0][1]].innerHTML !== '' && board[i[0][0]][i[0][1]].innerHTML === board[i[1][0]][i[1][1]].innerHTML && board[i[0][0]][i[0][1]].innerHTML === board[i[2][0]][i[2][1]].innerHTML){
-            return [i, true];
-        }
-    } 
-    return [[], false];
+        if (stateArray[i[0][0]][i[0][1]] !== null && stateArray[i[0][0]][i[0][1]] === stateArray[i[1][0]][i[1][1]] && stateArray[i[0][0]][i[0][1]] === stateArray[i[2][0]][i[2][1]]) return [i, true];
+    }
+    return [[], false]
 };
 
 //Taking coordinates of the winning combination of three boxes
@@ -140,7 +138,7 @@ let forPlayerO = true; //Always 'O' plays the first
 let gameOver = false; //created game end scenario
 
 //created array for state check
-let stateArray = [
+let boardState = [
     [null, null, null],
     [null, null, null], 
     [null, null, null]
@@ -158,11 +156,11 @@ board.forEach(row => {
                 if (col.innerHTML === ``) forPlayerO = updateBoardWithPlayerShape(forPlayerO, col);
 
                 //pushed into the specific cols and rows
-                if (forPlayerO) stateArray[rowPosIndex][colPosIndex] = 'X';
-                else stateArray[rowPosIndex][colPosIndex] = 'O';
+                if (forPlayerO) boardState[rowPosIndex][colPosIndex] = 'X';
+                else boardState[rowPosIndex][colPosIndex] = 'O';
 
                 //storing return from the win condition function
-                const [winTriple, isWin] = winCond();
+                const [winTriple, isWin] = winCond(boardState);
                 if (isWin){
                     updateBoardAfterWin(winTriple, forPlayerO);
                     if (forPlayerO) console.log('Player X wins!');
