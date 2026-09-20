@@ -120,10 +120,10 @@ const updateBoardAfterWin = (tripleAsked, playerBool) => {
 };
 
 //Tie condition created if the whole board fills
-const tieCond = () => {
-    for (const i of board)
+const tieCond = (stateArray) => {
+    for (const i of winArray)
     {
-        if (i[0].innerHTML === '' || i[1].innerHTML === '' || i[2].innerHTML === '') return false;
+        if (stateArray[i[0][0]][i[0][1]] === null || stateArray[i[1][0]][i[1][1]] === null || stateArray[i[2][0]][i[2][1]] === null) return false;
     }
     return true;
 };
@@ -170,7 +170,7 @@ board.forEach(row => {
                 }else{
 
                     //storing return from the tie condition function
-                    const isTie = tieCond();
+                    const isTie = tieCond(boardState);
                     if (isTie){
                         fullBoard.classList.add('grow');
                         gameOver = true;
@@ -182,7 +182,7 @@ board.forEach(row => {
         })
     })
 })
-console.log(stateArray);
+console.log(boardState);
 
 
 

@@ -21,6 +21,71 @@ body {
     height: 100vh;
 }
 
+nav {
+    position: absolute;
+    z-index: 999;
+    align-self: flex-start;
+    background: blue;
+    width: 100vw;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* test color */
+ 
+}
+
+.middle-nav {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* test color */
+    background: #e1ec0e;
+}
+
+.auth {
+    height: 100%;
+    width: 20%;
+    background: #00f215;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.btns {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    margin: 10px 40px;
+    border: none;
+    font-size: 1.3rem;
+}
+
+.sign-btn {
+    margin: 10px 40px;
+    border: none;
+    font-size: 1.3rem;
+}
+
 .container {
     position: relative;
     background: var(--board-color);
