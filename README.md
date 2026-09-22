@@ -51,7 +51,7 @@ A cell's centre in a 100-unit SVG viewBox is `index × (100 / 3) + (100 / 3) / 2
 
 - `index.html` — the board: a container holding nine cells
 - `index.js` — game state, move handling, win and tie detection, win-line drawing
-- stylesheet — board layout, neon styling, mark animations, winner animation
+- `index.css` — board layout, neon styling, mark animations, winner animation
 
 ---
 
@@ -104,13 +104,3 @@ In order:
 The computer opponent depends on the state refactor being complete, since searching possible futures requires evaluating boards that are never drawn.
 
 ---
-
-## What this project taught
-
-- Why game state should live in data, not in the DOM
-- The SVG dash-offset drawing technique, and deriving dash lengths geometrically
-- Absolute positioning and overlays, and what `pointer-events: none` is for
-- CSS specificity, the cascade, and state-on-a-container selectors
-- How two CSS animations on one element conflict
-- Replacing repeated conditionals with data plus a loop
-- Debugging by reading identifiers character by character, and by checking devtools before guessing
