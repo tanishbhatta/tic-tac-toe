@@ -86,21 +86,3 @@ Listed honestly, because the project is mid-refactor.
 9. **No restart.** The page must be reloaded to play again.
 
 ---
-
-## Roadmap
-
-In order:
-
-1. Fix the state desync (issue 1) by moving the `boardState` write under the same guard as the redraw.
-2. Fix `tieCond` to iterate `boardState` (issue 2).
-3. Capture the mover's symbol before the turn flips (issue 3).
-4. Move win-line styles to the stylesheet and collapse the duplicated branches (issues 4–6).
-5. On-page status message and a restart button.
-6. **Computer opponent**, in three levels:
-   - random legal move
-   - rule-based: win if possible, else block, else centre, else corner
-   - minimax: exhaustive game-tree search, unbeatable
-
-The computer opponent depends on the state refactor being complete, since searching possible futures requires evaluating boards that are never drawn.
-
----
